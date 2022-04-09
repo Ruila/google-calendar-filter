@@ -1,3 +1,7 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.h-available {
+    min-height: calc(var(--vh, 1vh) * 100);
+}
