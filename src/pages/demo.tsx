@@ -1,12 +1,24 @@
 import * as React from "react"
-import { LoginView } from "../components/login/LoginView"
+import { DemoView } from "../components/demo/DemoView"
 import { Layout } from "../components/Layout"
-const LoginPage = () => {
+import { ApiContext } from "../axios/ApiContext"
+import { useAsync } from "react-use"
+const DemoPage = () => {
+  useAsync(async () => {
+    const res =
+      await ApiContext.GoogleCalendarFilterExecutor.getGoogleAccessToken(
+        ApiContext.getClientId(),
+        ApiContext.getAuthCode(),
+        ApiContext.getClientSecret()
+      )
+    ApiContext.setAccessToken(res.data.access_token)
+    return res
+  }, [])
   return (
     <Layout>
-      <LoginView />
+      <DemoView />
     </Layout>
   )
 }
 
-export default LoginPage
+export default DemoPage
