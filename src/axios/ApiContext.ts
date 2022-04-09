@@ -2,7 +2,7 @@ import { ApiExecutor } from "./ApiExecutor"
 
 let apiExecutor: ApiExecutor
 
-export class AppContext {
+export class ApiContext {
   public static get GoogleCalendarFilterExecutor(): ApiExecutor {
     if (!apiExecutor) {
       apiExecutor = new ApiExecutor()

@@ -1,5 +1,4 @@
 import React from "react"
-
 type LayoutProps = {
   children: JSX.Element
 }

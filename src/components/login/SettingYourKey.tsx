@@ -4,15 +4,20 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import Button from "@mui/material/Button"
-import { AppContext } from "../../axios/ApiContext"
+import { ApiContext } from "../../axios/ApiContext"
+
+type SettingYourKeyProps = {
+  getClientId: (value: string) => void
+}
 
 const schema = yup.object().shape({
   clientId: yup.string().required(),
   clientSecret: yup.string().required(),
-  authCode: yup.string().required(),
 })
 
-export const SettingYourKey: React.FunctionComponent = () => {
+export const SettingYourKey: React.FunctionComponent<SettingYourKeyProps> = ({
+  getClientId,
+}) => {
   const {
     control,
     handleSubmit,
@@ -25,11 +30,10 @@ export const SettingYourKey: React.FunctionComponent = () => {
     try {
       Object.keys(formData).forEach(item => {
         if (item === "clientId") {
-          AppContext.setClientId(formData[item])
+          ApiContext.setClientId(formData[item])
+          getClientId(formData[item])
         } else if (item === "clientSecret") {
-          AppContext.setClientSecret(formData[item])
-        } else {
-          AppContext.setAuthCode(formData[item])
+          ApiContext.setClientSecret(formData[item])
         }
       })
       // eslint-disable-next-line no-empty
@@ -51,13 +55,6 @@ export const SettingYourKey: React.FunctionComponent = () => {
         name="clientSecret"
         errors={errors}
         placeholder="clientSecret"
-      />
-      <CommonInput
-        enableVisible={false}
-        control={control}
-        name="authCode"
-        errors={errors}
-        placeholder="authCode"
       />
       <Button variant="contained" onClick={handleSubmit(handleSettingKey)}>
         Check
