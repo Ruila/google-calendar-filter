@@ -4,6 +4,7 @@ import { useForm } from "react-hook-form"
 import { yupResolver } from "@hookform/resolvers/yup"
 import * as yup from "yup"
 import Button from "@mui/material/Button"
+import { AppContext } from "../../axios/ApiContext"
 
 const schema = yup.object().shape({
   clientId: yup.string().required(),
@@ -23,7 +24,13 @@ export const SettingYourKey: React.FunctionComponent = () => {
   const handleSettingKey = async (formData: { [x: string]: any }) => {
     try {
       Object.keys(formData).forEach(item => {
-        sessionStorage.setItem(item, formData[item])
+        if (item === "clientId") {
+          AppContext.setClientId(formData[item])
+        } else if (item === "clientSecret") {
+          AppContext.setClientSecret(formData[item])
+        } else {
+          AppContext.setAuthCode(formData[item])
+        }
       })
       // eslint-disable-next-line no-empty
     } catch (e) {}
