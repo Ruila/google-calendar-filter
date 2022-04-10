@@ -1,0 +1,2 @@
+"use strict";(self.webpackChunkgoogle_calendar_filter=self.webpackChunkgoogle_calendar_filter||[]).push([[691],{6854:function(e,n,t){t.r(n);var a=t(7294),c=t(5652),r=t(1597);n.default=function(){return(0,a.useEffect)((function(){var e=new URLSearchParams(window.location.search).get("code");e?(c.G.setAuthCode(e),(0,r.c4)("/demo")):(0,r.c4)("/login")}),[]),a.createElement(a.Fragment,null)}}}]);
+//# sourceMappingURL=component---src-pages-index-tsx-97d672394952dbf1e5ac.js.map
