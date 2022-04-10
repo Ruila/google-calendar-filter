@@ -7,7 +7,7 @@ export const DemoView: React.FunctionComponent = () => {
 
   useAsync(async () => {
     const res = await ApiContext.GoogleCalendarFilterExecutor.getCalendarList()
-    const getIdList = res.data.items.map(item => item.id)
+    const getIdList = res.items.map(item => item.id)
     setCalendarList(getIdList)
     return res
   }, [])
