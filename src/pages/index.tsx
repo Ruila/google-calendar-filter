@@ -2,6 +2,7 @@ import * as React from "react"
 import { useEffect } from "react"
 import { ApiContext } from "../axios/ApiContext"
 import { navigate } from "gatsby"
+import { useAsyncFn } from "react-use"
 
 const IndexPage = () => {
   useEffect(() => {
@@ -10,11 +11,23 @@ const IndexPage = () => {
     if (!getAuthCode) {
       navigate("/login")
     } else {
-      console.info("aaa", getAuthCode)
       ApiContext.setAuthCode(getAuthCode)
-      navigate("/demo")
+      getToken().catch()
     }
   }, [])
+
+  const [, getToken] = useAsyncFn(async () => {
+    const res =
+      await ApiContext.GoogleCalendarFilterExecutor.getGoogleAccessToken(
+        ApiContext.getClientId(),
+        ApiContext.getAuthCode(),
+        ApiContext.getClientSecret()
+      )
+    await ApiContext.setAccessToken(res.data.access_token)
+    await navigate("/demo")
+    return res
+  }, [])
+
   return <></>
 }
 

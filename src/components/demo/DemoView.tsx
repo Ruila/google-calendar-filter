@@ -1,22 +1,20 @@
-import React, { useEffect } from "react"
+import React, { useEffect, useState } from "react"
 import { ApiContext } from "../../axios/ApiContext"
 import { useAsync } from "react-use"
 
 export const DemoView: React.FunctionComponent = () => {
+  const [calendarList, setCalendarList] = useState<Array<string>>([])
+
   useAsync(async () => {
-    const res =
-      await ApiContext.GoogleCalendarFilterExecutor.getGoogleAccessToken(
-        ApiContext.getClientId(),
-        ApiContext.getAuthCode(),
-        ApiContext.getClientSecret()
-      )
-    ApiContext.setAccessToken(res.data.access_token)
+    const res = await ApiContext.GoogleCalendarFilterExecutor.getCalendarList()
+    const getIdList = res.data.items.map(item => item.id)
+    setCalendarList(getIdList)
     return res
   }, [])
 
   useEffect(() => {
-    console.info("axa", ApiContext.getAuthCode())
-  }, [])
+    console.info("axa", calendarList)
+  }, [calendarList])
 
   return <div>113</div>
 }
