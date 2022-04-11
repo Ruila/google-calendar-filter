@@ -1,20 +1,23 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import { ApiContext } from "../../axios/ApiContext"
 import { useAsync } from "react-use"
+import { CalendarFilter } from "./CalendarFilter"
+import { GetCalendarListItemType } from "../../types/GetCalendarListItemType"
 
 export const DemoView: React.FunctionComponent = () => {
-  const [calendarList, setCalendarList] = useState<Array<string>>([])
+  const [calendarList, setCalendarList] = useState<
+    Array<GetCalendarListItemType>
+  >([])
 
   useAsync(async () => {
     const res = await ApiContext.GoogleCalendarFilterExecutor.getCalendarList()
-    const getIdList = res.items.map(item => item.id)
-    setCalendarList(getIdList)
+    setCalendarList(res.items)
     return res
   }, [])
 
-  useEffect(() => {
-    console.info("axa", calendarList)
-  }, [calendarList])
+  const renderCalendarFilterList = calendarList.map(item => (
+    <CalendarFilter data={item} />
+  ))
 
-  return <div>113</div>
+  return <div>{renderCalendarFilterList}</div>
 }
