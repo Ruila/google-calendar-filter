@@ -3,17 +3,18 @@ import { ApiContext } from "../../axios/ApiContext"
 import { useAsyncFn } from "react-use"
 import Checkbox from "@mui/material/Checkbox"
 import { GetCalendarListItemType } from "../../types/GetCalendarListItemType"
-import { DatePicker } from "../common/DatePicker"
 
 type CalendarFilterProps = {
   data: GetCalendarListItemType
+  startTime: string
+  endTime: string
 }
 
 export const CalendarFilter: React.FunctionComponent<CalendarFilterProps> = ({
   data,
+  startTime,
+  endTime,
 }) => {
-  const [startTime, setStartTime] = useState("")
-  const [endTime, setEndTime] = useState("")
   const [checkValue, setCheckValue] = useState<boolean>(false)
   const [, getCalendar] = useAsyncFn(async (start, end) => {
     const res = await ApiContext.GoogleCalendarFilterExecutor.getCalendarById(
@@ -38,14 +39,6 @@ export const CalendarFilter: React.FunctionComponent<CalendarFilterProps> = ({
     }
   }, [checkValue])
 
-  const handleChangeStartTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setStartTime(e.target.value)
-  }
-
-  const handleChangeEndTime = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setEndTime(e.target.value)
-  }
-
   return (
     <div className="my-4">
       <div className="flex items-center">
@@ -55,16 +48,6 @@ export const CalendarFilter: React.FunctionComponent<CalendarFilterProps> = ({
           className="mr-2"
         />
         <div className="mx-4">{data.summary}</div>
-        <DatePicker
-          value={startTime}
-          onChange={handleChangeStartTime}
-          label="start"
-        />
-        <DatePicker
-          value={endTime}
-          onChange={handleChangeEndTime}
-          label="end"
-        />
       </div>
     </div>
   )

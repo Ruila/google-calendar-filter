@@ -1,7 +1,7 @@
 import { apiInstance } from "./apiInstance"
 import { GetTokenResponseType } from "../types/GetTokenResponseType"
 import { GetCalendarListResponseType } from "../types/GetCalendarListResponseType"
-import { GetCalendarbyIdResponseType } from "../types/GetCalendarbtIdResponseType"
+import { GetCalendarByIdResponseType } from "../types/GetCalendarByIdResponseType"
 
 export class ApiExecutor {
   public getGoogleAccessToken(
@@ -24,7 +24,7 @@ export class ApiExecutor {
     id: string,
     start: Date,
     end: Date
-  ): Promise<GetCalendarbyIdResponseType> {
+  ): Promise<GetCalendarByIdResponseType> {
     return apiInstance.get(
       `https://www.googleapis.com/calendar/v3/calendars/${id}/events?timeMax=${end}&timeMin=${start}&singleEvents=true`
     )
