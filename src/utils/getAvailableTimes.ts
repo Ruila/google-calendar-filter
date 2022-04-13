@@ -1,8 +1,11 @@
 import { GetCalendarByIdEventItemType } from "../types/GetCalendarByIdEventItemType"
 
-export const getAvailableTimes = function (
+export const getAvailableTimes = (
   busySlot: Array<GetCalendarByIdEventItemType>
-) {
-  let freeSlot = ["00:00", "23:59"]
-  busySlot.forEach(item => {})
+) => {
+  const sortBusySlot = busySlot.sort(function(a,b){
+    return (new Date(b.start.dateTime) as any) - (new Date(a.start.dateTime) as any);
+  });
+
+  console.info("sortBusySlot",busySlot, sortBusySlot)
 }

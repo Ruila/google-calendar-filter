@@ -40,6 +40,7 @@ export const DemoView: React.FunctionComponent = () => {
   }, [startTime, endTime])
 
   const handleChangeCurrentDay = (value: string) => {
+    console.info("handleChangeCurrentDay", value)
     setCurrentDay(value)
   }
 
@@ -49,11 +50,13 @@ export const DemoView: React.FunctionComponent = () => {
       startTime={startTime}
       endTime={endTime}
       key={index}
+      currentDay={currentDay}
     />
   ))
 
   const renderDaysList = dayList.map(item => (
     <div
+      key={item}
       className={`h-[60px] w-[120px] flex items-center justify-center rounded-2xl cursor-pointer shadow-lg m-4 ${
         currentDay === item ? "bg-[#cbe0f2]" : ""
       }`}
