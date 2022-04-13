@@ -3,6 +3,7 @@ import { ApiContext } from "../../axios/ApiContext"
 import { useAsyncFn } from "react-use"
 import Checkbox from "@mui/material/Checkbox"
 import { GetCalendarListItemType } from "../../types/GetCalendarListItemType"
+import { DatePicker } from "../common/DatePicker"
 
 type CalendarFilterProps = {
   data: GetCalendarListItemType
@@ -11,12 +12,14 @@ type CalendarFilterProps = {
 export const CalendarFilter: React.FunctionComponent<CalendarFilterProps> = ({
   data,
 }) => {
+  const [startTime, setStartTime] = useState("")
+  const [endTime, setEndTime] = useState("")
   const [checkValue, setCheckValue] = useState<boolean>(false)
-  const [, getCalendar] = useAsyncFn(async () => {
+  const [, getCalendar] = useAsyncFn(async (start, end) => {
     const res = await ApiContext.GoogleCalendarFilterExecutor.getCalendarById(
       data.id,
-      "2022-03-25T08:00:00Z",
-      "2022-03-31T11:00:00Z"
+      start,
+      end
     )
     return res
   }, [])
@@ -27,19 +30,41 @@ export const CalendarFilter: React.FunctionComponent<CalendarFilterProps> = ({
 
   useEffect(() => {
     if (checkValue) {
-      getCalendar().catch()
+      const endTimeResult = new Date(endTime).getTime() + 60 * 60 * 24 * 1000
+      getCalendar(
+        new Date(startTime).toISOString(),
+        new Date(endTimeResult).toISOString()
+      ).catch()
     }
   }, [checkValue])
 
+  const handleChangeStartTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setStartTime(e.target.value)
+  }
+
+  const handleChangeEndTime = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setEndTime(e.target.value)
+  }
+
   return (
-    <div>
+    <div className="my-4">
       <div className="flex items-center">
         <Checkbox
           checked={checkValue}
           onChange={handleOnChane}
           className="mr-2"
         />
-        <div>{data.summary}</div>
+        <div className="mx-4">{data.summary}</div>
+        <DatePicker
+          value={startTime}
+          onChange={handleChangeStartTime}
+          label="start"
+        />
+        <DatePicker
+          value={endTime}
+          onChange={handleChangeEndTime}
+          label="end"
+        />
       </div>
     </div>
   )

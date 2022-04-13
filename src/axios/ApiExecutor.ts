@@ -22,11 +22,11 @@ export class ApiExecutor {
 
   public getCalendarById(
     id: string,
-    start: string,
-    end: string
+    start: Date,
+    end: Date
   ): Promise<GetCalendarbyIdResponseType> {
     return apiInstance.get(
-      `https://www.googleapis.com/calendar/v3/calendars/${id}/events?timeMax=${end}&timeMin=${start}`
+      `https://www.googleapis.com/calendar/v3/calendars/${id}/events?timeMax=${end}&timeMin=${start}&singleEvents=true`
     )
   }
 }
