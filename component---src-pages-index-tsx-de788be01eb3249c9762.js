@@ -1,2 +1,0 @@
-"use strict";(self.webpackChunkgoogle_calendar_filter=self.webpackChunkgoogle_calendar_filter||[]).push([[691],{6854:function(e,n,a){a.r(n);var c=a(7294),o=a(5652),t=a(1597);n.default=function(){return(0,c.useEffect)((function(){var e=new URLSearchParams(window.location.search).get("code");e?(console.info("aaa",e),o.G.setAuthCode(e),(0,t.c4)("/demo")):(0,t.c4)("/login")}),[]),c.createElement(c.Fragment,null)}}}]);
-//# sourceMappingURL=component---src-pages-index-tsx-de788be01eb3249c9762.js.map
